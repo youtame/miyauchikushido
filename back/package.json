@@ -1,0 +1,19 @@
+{
+    "name": "online-payment",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "Online payment template on my website",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "nodemon src/index.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^17.3.1",
+        "express": "^5.2.1",
+        "nodemon": "^3.1.14",
+        "stripe": "^20.4.1"
+    }
+}

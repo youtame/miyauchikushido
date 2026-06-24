@@ -1,0 +1,15 @@
+<button onclick="pay('donation1000')">Donate ¥1000</button>
+
+<script>
+    async function pay(product) {
+        const res = await fetch("/payment/checkout", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ product }),
+        });
+
+        const data = await res.json();
+
+        window.location = data.url;
+    }
+</script>

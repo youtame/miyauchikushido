@@ -1,0 +1,33 @@
+services:
+    #   front:
+    #     build:
+    #       context: ./front
+    #         volumes:
+    #            - ./front:/app
+    #        ports:
+    #            - "5173:5173"
+    #        depends_on:
+    #            - back
+    #        environment:
+    #            - VITE_API_BASE=http://back:3000
+    #        tty: true
+
+    back:
+        build:
+            context: ./back
+        volumes:
+            - ./back:/app
+        ports:
+            - "3000:3000"
+        environment:
+            - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY}
+            - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+            - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
+        tty: true
+
+    stripe-cli:
+        image: stripe/stripe-cli
+        depends_on:
+            - back
+        command: listen --forward-to back:3000/webhook --api-key ${STRIPE_SECRET_KEY}
+        restart: unless-stopped

@@ -1,0 +1,5 @@
+今回私はstripeを使って決済システムのテンプレートを作成しておき、将来ECサイトやサーバ代の寄付を募る時に、使うために作成しておくものです。今回環境はdockerで構築し、現在expressを入れるところまでは作りました。ここから、どのような手順を踏んでいけば良いでしょうか。
+
+curl -X POST http://localhost:3000/payment/checkout \
+     -H "Content-Type: application/json" \
+     -d '{"product": "donation500"}'
