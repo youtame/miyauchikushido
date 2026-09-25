@@ -4,15 +4,28 @@ import { PRODUCTS } from "../config/products.js";
 
 export async function createSession(req, res) {
     try {
-        const { product } = req.body;
+        const { products } = req.body;
 
-        const item = PRODUCTS[product];
-
-        if (!item) {
-            return res.status(400).json({ error: "invalid product" });
+        if (!products || !Array.isArray(products) || products.length === 0) {
+            return res.status(400).json({ error: "products array is required" });
         }
 
-        const session = await createCheckoutSession(item.priceId);
+        const lineItems = [];
+
+        for (const productId of products) {
+            const item = PRODUCTS[productId];
+
+            if (!item) {
+                return res.status(400).json({ error: `invalid product: ${productId}` });
+            }
+
+            lineItems.push({
+                price: item.priceId,
+                quantity: 1,
+            });
+        }
+
+        const session = await createCheckoutSession(lineItems);
 
         res.json({ url: session.url });
     } catch (err) {
